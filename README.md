@@ -1,24 +1,20 @@
-# README
+# Placements Teaser Instructions
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Please implement a React.JS component(s) based solution for managing a given invoice.
 
-Things you may want to cover:
+Things to think about:
+1. pagination
+2. filters
+3. sorting
+4. currency formatting
+5. interactive sub-totalings
+6. etc.
 
-* Ruby version
+# Installation
+1. Make sure you have Rails installed locally (https://guides.rubyonrails.org/v5.0/getting_started.html)
+2. Clone or fork this git repo locally
+3. Run `bundle install` in your terminal
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+# Running
+1. Run `bundle exec rails server` in your terminal
+2. Go to `localhost:3000` in your browser and start hacking away!
