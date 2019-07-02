@@ -1,6 +1,6 @@
 # Placements Teaser Instructions
 
-Please implement a React.JS component(s) based solution for managing a given invoice.
+Please implement a React.JS component(s) for managing an example invoice JSON (10K lines, ~3MB).
 
 Things to think about:
 1. pagination
