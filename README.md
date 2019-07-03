@@ -13,8 +13,8 @@ Things to think about:
 # Installation
 1. Make sure you have Rails installed locally (https://guides.rubyonrails.org/v5.0/getting_started.html)
 2. Clone or fork this git repo locally
-3. Run `bundle install` in your terminal
+3. Run `bundle install` in your terminal (within your `placements_teaser` project directory).
 
 # Running
-1. Run `bundle exec rails server` in your terminal
+1. Run `bundle exec rails server` in your terminal (within your `placements_teaser` project directory).
 2. Go to `localhost:3000` in your browser and start hacking away!
