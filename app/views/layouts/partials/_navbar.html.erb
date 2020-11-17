@@ -12,5 +12,15 @@
         </li>
       </ul>
     </div>
+
+    <ul class="navbar-nav col-1">
+      <li class="nav-item active">
+        <% if current_user.present? %>
+          <%= link_to 'Log out', destroy_user_session_path, method: :delete, class: 'btn btn-outline-danger' %>
+        <% else %>
+          <%= link_to 'Log in', user_session_path, class: 'btn btn-outline-success' %>
+        <% end %>
+      </li>
+    </ul>
   </div>
 </nav>
