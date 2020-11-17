@@ -1,0 +1,33 @@
+<div class="row mt-5 mb-5">
+  <h3>Line Items</h3>
+
+  <table class="table table-bordered">
+    <thead class="table-success">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">name</th>
+        <th scope="col">campaign</th>
+        <th scope="col">booked amount</th>
+        <th scope="col">actual amount</th>
+        <th scope="col">adjustments</th>
+        <th scope="col">billable amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @items.each do |item| %>
+      <tr>
+        <th scope="row"><%= item.id %></th>
+        <td><%= item.name %></td>
+        <td><%= link_to item.campaign_name.truncate(35), campaign_path(item.campaign) %></td>
+        <td><%= number_to_currency(item.booked_amount) %></td>
+        <td><%= number_to_currency(item.actual_amount) %></td>
+        <td><%= number_to_currency(item.adjustments) %></td>
+        <td><%= number_to_currency(item.billable_amount) %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+  <%= paginate @items %>
+</div>
+
