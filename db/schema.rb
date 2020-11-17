@@ -10,7 +10,38 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20201117080841) do
+ActiveRecord::Schema.define(version: 20201117084548) do
+
+  create_table "campaigns", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "campaigns_invoices", force: :cascade do |t|
+    t.integer "campaign_id"
+    t.integer "invoice_id"
+    t.index ["campaign_id"], name: "index_campaigns_invoices_on_campaign_id"
+    t.index ["invoice_id"], name: "index_campaigns_invoices_on_invoice_id"
+  end
+
+  create_table "invoices", force: :cascade do |t|
+    t.string "code"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "line_items", force: :cascade do |t|
+    t.string "name", null: false
+    t.decimal "booked_amount", precision: 10, scale: 20, default: "0.0"
+    t.decimal "actual_amount", precision: 10, scale: 20, default: "0.0"
+    t.decimal "adjustments", precision: 10, scale: 20, default: "0.0"
+    t.integer "lock_version", default: 0
+    t.integer "campaign_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["campaign_id"], name: "index_line_items_on_campaign_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
