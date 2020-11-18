@@ -12,6 +12,10 @@ class Invoice < ApplicationRecord
     end
   end
 
+  def grand_totals
+    campaigns.sum(&:sub_totals)
+  end
+
   private
 
   def generate_code
