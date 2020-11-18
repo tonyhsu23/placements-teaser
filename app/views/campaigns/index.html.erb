@@ -1,0 +1,24 @@
+<div class="row mt-5 mb-5">
+  <h3>Campaigns</h3>
+
+  <table class="table table-bordered">
+    <thead class="table-success">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">name</th>
+        <th scope="col">sub-totals</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @campaigns.each do |campaign| %>
+      <tr>
+        <th scope="row"><%= campaign.id %></th>
+        <td><%= link_to campaign.name, campaign_path(campaign) %></td>
+        <td><%= number_to_currency(campaign.sub_totals) %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+  <%= paginate @campaigns %>
+</div>
