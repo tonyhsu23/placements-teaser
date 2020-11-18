@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   resources :campaigns, only: %i[index show]
   resources :line_items, only: %i[index update]
+  resources :invoices, only: %i[index create]
 
   root 'line_items#index'
 end
