@@ -25,7 +25,7 @@
           <%= form_with model: item do |f| %>
             <%= f.text_field :adjustments,
                              value: number_to_currency(item.adjustments),
-                             id: 'line-item-adjustements-input' %>
+                             id: "input-adjustments-#{item.id}" %>
             <%= f.submit 'save', class: 'btn btn-outline-primary btn-sm' %>
           <% end %>
         </td>
