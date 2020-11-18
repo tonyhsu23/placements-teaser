@@ -11,12 +11,12 @@
     </thead>
     <tbody>
       <% @campaigns.each do |campaign| %>
-      <tr>
-        <th scope="row"><%= campaign.id %></th>
-        <td><%= link_to campaign.name, campaign_path(campaign) %></td>
-        <td><%= number_to_currency(campaign.sub_totals) %></td>
-      </tr>
-    <% end %>
+        <tr>
+          <th scope="row"><%= campaign.id %></th>
+          <td><%= link_to campaign.name, campaign_path(campaign) %></td>
+          <td><%= number_to_currency(campaign.sub_totals) %></td>
+        </tr>
+      <% end %>
     </tbody>
   </table>
 
