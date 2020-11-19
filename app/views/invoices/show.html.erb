@@ -13,7 +13,15 @@
     <% @invoice.campaigns.each do |campaign| %>
       <thead class="table-success">
         <tr>
-          <th colspan="5"><%= campaign.name %></th>
+          <th colspan="5">
+            <%= campaign.name %>
+            <%= link_to 'Toggle detail',
+              "#tableCollapse#{campaign.id}",
+              class: 'btn btn-outline-secondary btn-sm ml-2',
+              'data-toggle' => 'collapse',
+              'araia-expanded' => 'false',
+              'aria-controls' => 'tableCollapse' %>
+          </th>
         </tr>
         <tr>
           <th scope="col">name</th>
@@ -23,7 +31,7 @@
           <th scope="col">billable amount</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody class="collapse" id="tableCollapse<%= campaign.id %>">
         <% campaign.line_items.each do |item| %>
           <tr>
             <td><%= item.name %></td>
@@ -33,14 +41,14 @@
             <td><%= number_to_currency(item.billable_amount) %></td>
           </tr>
         <% end %>
-        <tr>
-          <td colspan="5">
-            <h6 class="text-primary">
-              sub-totals: <%= number_to_currency(campaign.sub_totals) %>
-            </h6>
-          </td>
-        </tr>
       </tbody>
+      <tr>
+        <td colspan="5">
+          <h6 class="text-primary">
+            sub-totals: <%= number_to_currency(campaign.sub_totals) %>
+          </h6>
+        </td>
+      </tr>
       <td colspan="5"></td>
     <% end %>
     <tfoot>
