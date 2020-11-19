@@ -1,9 +1,10 @@
 class LineItemsController < ApplicationController
   include Currency
+  include ResourceManageable
 
   def index
     @items = LineItem.includes(:campaign)
-    @items = Pagination.new(@items, paginate_params).paginate
+    @items = manage(@items)
   end
 
   def update

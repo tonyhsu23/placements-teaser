@@ -1,10 +1,19 @@
 class CampaignsController < ApplicationController
+  include ResourceManageable
+
+  before_action :set_campaigns
+
   def index
-    @campaigns = Campaign.includes(:line_items)
-    @campaigns = Pagination.new(@campaigns, paginate_params).paginate
+    @campaigns = manage(@campaigns)
   end
 
   def show
-    @campaign = Campaign.includes(:line_items).find(params[:id])
+    @campaign = sort(@campaigns).find(params[:id])
+  end
+
+  private
+
+  def set_campaigns
+    @campaigns = Campaign.includes(:line_items)
   end
 end

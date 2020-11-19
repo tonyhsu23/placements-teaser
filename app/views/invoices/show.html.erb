@@ -14,13 +14,13 @@
       <thead class="table-success">
         <tr>
           <th colspan="5">
-            <%= campaign.name %>
+            <%= link_to campaign.name, campaign_path(campaign) %>
             <%= link_to 'Toggle detail',
-              "#tableCollapse#{campaign.id}",
-              class: 'btn btn-outline-secondary btn-sm ml-2',
-              'data-toggle' => 'collapse',
-              'araia-expanded' => 'false',
-              'aria-controls' => 'tableCollapse' %>
+                        "#tableCollapse#{campaign.id}",
+                        class: 'btn btn-outline-secondary btn-sm ml-2',
+                        'data-toggle' => 'collapse',
+                        'aria-expanded' => false,
+                        'aria-controls' => 'tableCollapse' %>
           </th>
         </tr>
         <tr>

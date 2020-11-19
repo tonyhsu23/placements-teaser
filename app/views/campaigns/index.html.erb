@@ -4,17 +4,17 @@
   <table class="table table-bordered">
     <thead class="table-success">
       <tr>
-        <th scope="col">#</th>
-        <th scope="col">name</th>
+        <th scope="col"><%= sort_link 'name', 'campaigns.name', request.params %></th>
         <th scope="col">sub-totals</th>
+        <th scope="col"><%= sort_link 'created_at', 'campaigns.created_at', request.params %></th>
       </tr>
     </thead>
     <tbody>
       <% @campaigns.each do |campaign| %>
         <tr>
-          <th scope="row"><%= campaign.id %></th>
           <td><%= link_to campaign.name, campaign_path(campaign) %></td>
           <td><%= number_to_currency(campaign.sub_totals) %></td>
+          <td><%= campaign.created_at %></td>
         </tr>
       <% end %>
     </tbody>

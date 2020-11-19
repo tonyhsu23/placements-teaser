@@ -1,10 +1,12 @@
 class InvoicesController < ApplicationController
+  include ResourceManageable
+
   before_action :set_campaign_selection, only: %i[index show]
   before_action :set_campaigns, only: %i[create update]
 
   def index
     @invoices = Invoice.includes(campaigns: :line_items)
-    @invoices = Pagination.new(@invoices, paginate_params).paginate
+    @invoices = manage(@invoices)
   end
 
   def create

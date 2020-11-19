@@ -4,19 +4,17 @@
   <table class="table table-bordered">
     <thead class="table-success">
       <tr>
-        <th scope="col">#</th>
-        <th scope="col">name</th>
-        <th scope="col">campaign</th>
-        <th scope="col">booked amount</th>
-        <th scope="col">actual amount</th>
-        <th scope="col">adjustments</th>
+        <th scope="col"><%= sort_link 'name', 'line_items.name', request.params %></th>
+        <th scope="col"><%= sort_link 'campaign', 'campaigns.name', request.params %></th>
+        <th scope="col"><%= sort_link 'booked amount', 'booked_amount', request.params %></th>
+        <th scope="col"><%= sort_link 'actual amount', 'actual_amount', request.params %></th>
+        <th scope="col"><%= sort_link 'adjustments', 'adjustments', request.params %></th>
         <th scope="col">billable amount</th>
       </tr>
     </thead>
     <tbody>
       <% @items.each do |item| %>
         <tr>
-          <th scope="row"><%= item.id %></th>
           <td><%= item.name %></td>
           <td><%= link_to item.campaign_name.truncate(35), campaign_path(item.campaign) %></td>
           <td><%= number_to_currency(item.booked_amount) %></td>

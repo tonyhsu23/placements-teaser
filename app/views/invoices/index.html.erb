@@ -10,16 +10,19 @@
   <table class="table table-bordered mt-2">
     <thead class="table-success">
       <tr>
-        <th scope="col">#</th>
-        <th scope="col">code</th>
+        <th scope="col">
+          <%= sort_link 'code', 'code', request.params %>
+        </th>
         <th scope="col">campaigns</th>
         <th scope="col">grand-totals</th>
+        <th scope="col">
+          <%= sort_link 'created at', 'created_at', request.params %>
+        </th>
       </tr>
     </thead>
     <tbody>
       <% @invoices.each do |invoice| %>
         <tr>
-          <th scope="row"><%= invoice.id %></th>
           <td><%= link_to invoice.code, invoice_path(invoice) %></td>
           <td>
             <% invoice.campaigns.each do |campaign| %>
@@ -27,6 +30,7 @@
             <% end %>
           </td>
           <td><%= number_to_currency(invoice.grand_totals) %></td>
+          <td><%= invoice.created_at %></td>
         </tr>
       <% end %>
     </tbody>

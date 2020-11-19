@@ -6,18 +6,16 @@
   <table class="table table-bordered">
     <thead class="table-success">
       <tr>
-        <th scope="col">#</th>
-        <th scope="col">name</th>
-        <th scope="col">booked amount</th>
-        <th scope="col">actual amount</th>
-        <th scope="col">adjustments</th>
+        <th scope="col"><%= sort_link 'name', 'line_items.name', request.params %></th>
+        <th scope="col"><%= sort_link 'booked amount', 'line_items.booked_amount', request.params %></th>
+        <th scope="col"><%= sort_link 'actual amount', 'line_items.actual_amount', request.params %></th>
+        <th scope="col"><%= sort_link 'adjustments', 'line_items.adjustments', request.params %></th>
         <th scope="col">billable amount</th>
       </tr>
     </thead>
     <tbody>
       <% @campaign.line_items.each do |item| %>
         <tr>
-          <th scope="row"><%= item.id %></th>
           <td><%= item.name %></td>
           <td><%= number_to_currency(item.booked_amount) %></td>
           <td><%= number_to_currency(item.actual_amount) %></td>
