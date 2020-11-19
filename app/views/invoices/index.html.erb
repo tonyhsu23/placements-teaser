@@ -35,29 +35,17 @@
   <%= paginate @invoices %>
 </div>
 
-<div class="modal fade" id="createInvoiceModal" tabindex="-1" role="dialog"
-  aria-labelledby="createInvoiceModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="createInvoiceModal">Create Invoice</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+<%= render '/layouts/partials/modal', locals: { name: 'createInvoice' } do %>
+  <%= form_for :invoice do |f| %>
+    <div class="modal-body form-group">
+      <div class="form-group">
+        <label for="campaingsSelectLabel">Campaigns</label>
+        <%= f.select :campaigns, @campaigns_select, {}, multiple: true, class: 'form-control' %>
       </div>
-
-      <%= form_for :invoice do |f| %>
-        <div class="modal-body form-group">
-          <div class="form-group">
-            <label for="campaingsSelectLabel">Campaigns</label>
-            <%= f.select :campaigns, @campaigns_select, {}, multiple: true, class: 'form-control' %>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <%= f.submit 'Create', class: 'btn btn-primary'%>
-        </div>
-      <% end %>
     </div>
-  </div>
-</div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      <%= f.submit 'Create', class: 'btn btn-primary'%>
+    </div>
+  <% end %>
+<% end %>

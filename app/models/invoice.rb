@@ -4,10 +4,9 @@ class Invoice < ApplicationRecord
 
   before_create :generate_code
 
-  def self.create_with_campaigns(campaign_ids)
+  def self.associate_to_campaigns(campaigns, **opt)
     ActiveRecord::Base.transaction do
-      campaigns = Campaign.where(id: campaign_ids)
-      invoice   = Invoice.create!
+      invoice = opt[:invoice_id].present? ? find(opt[:invoice_id]) : create!
       invoice.campaigns << campaigns
     end
   end
