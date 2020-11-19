@@ -1,0 +1,48 @@
+<div class="row mt-2 mb-5">
+  <%= render 'layouts/partials/breadcrumb', locals: { resource: @invoice } %>
+
+  <h3 class="text-primary"><%= "Invoice: #{@invoice.code}" %></h3>
+
+  <table class="table table-bordered">
+    <% @invoice.campaigns.each do |campaign| %>
+      <thead class="table-success">
+        <tr>
+          <th colspan="5"><%= campaign.name %></th>
+        </tr>
+        <tr>
+          <th scope="col">name</th>
+          <th scope="col">booked amount</th>
+          <th scope="col">actual amount</th>
+          <th scope="col">adjustments</th>
+          <th scope="col">billable amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% campaign.line_items.each do |item| %>
+          <tr>
+            <td><%= item.name %></td>
+            <td><%= number_to_currency(item.booked_amount) %></td>
+            <td><%= number_to_currency(item.actual_amount) %></td>
+            <td><%= number_to_currency(item.adjustments) %></td>
+            <td><%= number_to_currency(item.billable_amount) %></td>
+          </tr>
+        <% end %>
+        <tr>
+          <td colspan="5">
+            <h6 class="text-primary">
+              sub-totals: <%= number_to_currency(campaign.sub_totals) %>
+            </h6>
+          </td>
+        </tr>
+      </tbody>
+      <td colspan="5"></td>
+    <% end %>
+    <tfoot>
+      <td colspan="5">
+        <h5 class="text-primary">
+          grand-totals: <%= number_to_currency(@invoice.grand_totals) %>
+        </h5>
+      </td>
+    </tfoot>
+  </table>
+</div>

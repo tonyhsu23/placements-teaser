@@ -12,6 +12,10 @@ class InvoicesController < ApplicationController
     redirect_back(fallback_location: invoices_path)
   end
 
+  def show
+    @invoice = Invoice.includes(campaigns: :line_items).find(params[:id])
+  end
+
   private
 
   def campaign_ids

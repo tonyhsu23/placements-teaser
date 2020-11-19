@@ -1,0 +1,11 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <%= link_to locals[:resource].class.name.pluralize,
+                  send("#{locals[:resource].class.name.downcase.pluralize}_path") %>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">
+      <%= "#{locals[:resource].class.name.downcase}-#{locals[:resource].id}" %>
+    </li>
+  </ol>
+</nav>
