@@ -1,0 +1,43 @@
+wb = xlsx_package.workbook
+
+style = wb.styles
+title_cell    = style.add_style(bg_color: 'D5E6DE', sz: 18, alignment: { horizontal: :center })
+campaign_cell = style.add_style(bg_color: 'D5E6DE', sz: 15, alignment: { horizontal: :center })
+item_cell     = style.add_style(bg_color: 'D3D3D3', sz: 12, alignment: { horizontal: :center })
+totals_style  = style.add_style(bg_color: 'D3D3D3', sz: 15)
+cell          = style.add_style(sz: 12)
+
+wb.add_worksheet(name: "Invoice") do |sheet|
+  sheet.add_row ["Invoice: #{@invoice.code}"], style: [title_cell]
+  sheet.add_row
+  sheet.merge_cells('A1:E1')
+
+  campaign_merge_row, sub_totals_merge_row = 3, 2
+  @invoice.campaigns.each_with_index do |campaign, index|
+    sub_totals_merge_row += campaign.line_items.count + 3 + index
+
+    sheet.add_row [campaign.name], style: [campaign_cell]
+    sheet.add_row ['name', 'booked amount', 'actual amount', 'adjustments', 'billable amount'],
+      style: [item_cell, item_cell, item_cell, item_cell, item_cell]
+    campaign.line_items.each do |item|
+      sheet.add_row [
+        item.name,
+        number_to_currency(item.booked_amount),
+        number_to_currency(item.actual_amount),
+        number_to_currency(item.adjustments),
+        number_to_currency(item.billable_amount)
+      ], style: [cell, cell, cell, cell, cell]
+    end
+    sheet.add_row ["sub-totals: #{number_to_currency(campaign.sub_totals)}"], style: [totals_style]
+    sheet.add_row
+
+    sheet.merge_cells("A#{campaign_merge_row}:E#{campaign_merge_row}")
+    sheet.merge_cells("A#{sub_totals_merge_row}:E#{sub_totals_merge_row}")
+
+    campaign_merge_row += campaign.line_items.count + 4
+  end
+
+  sheet.add_row ["grand-totals: #{number_to_currency(@invoice.grand_totals)}"], style: [totals_style]
+  sheet.merge_cells("A#{sub_totals_merge_row+2}:E#{sub_totals_merge_row+2}")
+end
+

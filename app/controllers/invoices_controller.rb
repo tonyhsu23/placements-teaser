@@ -15,6 +15,13 @@ class InvoicesController < ApplicationController
   end
 
   def show
+    respond_to do |format|
+      format.html
+      format.xlsx {
+        filename = "#{Date.today}-INVOICE-#{@invoice.code}"
+        response.headers['Content-Disposition'] = "attachment; filename=\"#{filename}.xlsx\""
+      }
+    end
   end
 
   def update

@@ -3,6 +3,8 @@
 
   <div class="col-10">
     <h3 class="text-primary"><%= "Invoice: #{@invoice.code}" %></h3>
+    <%= link_to 'Export', invoice_path(@invoice, format: :xlsx),
+                class: 'btn btn-outline-success' %>
   </div>
   <div class="col-2">
     <%= link_to 'Add Campaign', '#addCampaignModal',
