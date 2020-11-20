@@ -1,4 +1,6 @@
 class Invoice < ApplicationRecord
+  include FieldSearchable
+
   has_many :campaigns_invoices
   has_many :campaigns, through: :campaigns_invoices
 

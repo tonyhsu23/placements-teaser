@@ -7,6 +7,8 @@
                 class: 'btn btn-primary', 'data-toggle' => 'modal' %>
   </div>
 
+  <%= render '/layouts/partials/filter', locals: { path: invoices_path } %>
+
   <table class="table table-bordered mt-2">
     <thead class="table-success">
       <tr>

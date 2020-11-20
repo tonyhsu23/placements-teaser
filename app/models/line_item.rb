@@ -1,4 +1,6 @@
 class LineItem < ApplicationRecord
+  include FieldSearchable
+
   belongs_to :campaign
 
   delegate :name, prefix: :campaign, to: :campaign

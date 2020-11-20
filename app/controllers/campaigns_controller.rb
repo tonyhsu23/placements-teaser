@@ -1,6 +1,4 @@
 class CampaignsController < ApplicationController
-  include ResourceManageable
-
   before_action :set_campaigns
 
   def index

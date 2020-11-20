@@ -1,9 +1,8 @@
 class LineItemsController < ApplicationController
   include Currency
-  include ResourceManageable
 
   def index
-    @items = LineItem.includes(:campaign)
+    @items = LineItem.includes(:campaign).left_joins(:campaign)
     @items = manage(@items)
   end
 
