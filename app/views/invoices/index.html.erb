@@ -1,13 +1,12 @@
 <div class="row mt-3 mb-5">
-  <div class="col-2">
-    <h3>Invoices</h3>
+  <h3>Invoices</h3>
+  <div class="col-8">
+    <%= render '/layouts/partials/filter', locals: { path: invoices_path } %>
   </div>
-  <div class="col-2 offset-8">
+  <div class="col-2 offset-2 mt-3 mb-3">
     <%= link_to 'Create Invoice', '#createInvoiceModal',
                 class: 'btn btn-primary', 'data-toggle' => 'modal' %>
   </div>
-
-  <%= render '/layouts/partials/filter', locals: { path: invoices_path } %>
 
   <table class="table table-bordered mt-2">
     <thead class="table-success">

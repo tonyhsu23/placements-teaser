@@ -3,7 +3,7 @@ class InvoicesController < ApplicationController
   before_action :set_campaigns, only: %i[create update]
 
   def index
-    @invoices = Invoice.includes(campaigns: :line_items).left_joins(:campaigns)
+    @invoices = Invoice.includes(campaigns: :line_items).joins(campaigns: :line_items)
     @invoices = manage(@invoices)
   end
 
@@ -21,6 +21,9 @@ class InvoicesController < ApplicationController
     invoice = Invoice.associate_to_campaigns(@campaigns, invoice_id: params[:id])
 
     redirect_back(fallback_location: invoices_path(invoice))
+  end
+
+  def remove_campaign
   end
 
   private

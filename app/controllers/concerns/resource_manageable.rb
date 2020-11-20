@@ -8,7 +8,7 @@ module ResourceManageable
   end
 
   def sort(resources)
-    resources.order("#{sort_by_field || 'id'} #{direction || 'desc'}")
+    resources.order("#{sort_by_field || table_id} #{direction || 'desc'}")
   end
 
   def paginate(resources)
@@ -32,5 +32,9 @@ module ResourceManageable
   def searchable_fields
     class_name = controller_name.classify
     "#{class_name}::#{class_name.upcase}_SEARCHABLE_FIELDS".constantize
+  end
+
+  def table_id
+    "#{controller_name}.id"
   end
 end
