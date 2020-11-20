@@ -1,6 +1,7 @@
 class InvoicesController < ApplicationController
   before_action :set_campaign_selection, only: %i[index show]
   before_action :set_campaigns, only: %i[create update]
+  before_action :set_invoice, only: %i[show remove_campaign]
 
   def index
     @invoices = Invoice.includes(campaigns: :line_items).joins(campaigns: :line_items)
@@ -14,7 +15,6 @@ class InvoicesController < ApplicationController
   end
 
   def show
-    @invoice = Invoice.includes(campaigns: :line_items).find(params[:id])
   end
 
   def update
@@ -24,12 +24,23 @@ class InvoicesController < ApplicationController
   end
 
   def remove_campaign
+    @invoice.remove_campaign(campaign_id)
+
+    redirect_back(fallback_location: invoice_path(@invoice))
   end
 
   private
 
   def campaign_ids
     params.require(:invoice).require(:campaigns).reject(&:blank?)
+  end
+
+  def campaign_id
+    params.require(:campaign)
+  end
+
+  def set_invoice
+    @invoice = Invoice.includes(campaigns: :line_items).find(params[:id])
   end
 
   def set_campaign_selection

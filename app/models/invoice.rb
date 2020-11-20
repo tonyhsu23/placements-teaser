@@ -7,9 +7,16 @@ class Invoice < ApplicationRecord
   before_create :generate_code
 
   def self.associate_to_campaigns(campaigns, **opt)
-    ActiveRecord::Base.transaction do
+    transaction do
       invoice = opt[:invoice_id].present? ? find(opt[:invoice_id]) : create!
       invoice.campaigns << campaigns
+    end
+  end
+
+  def remove_campaign(campaign_id)
+    transaction do
+      campaign = Campaign.find(campaign_id)
+      campaigns.delete(campaign)
     end
   end
 

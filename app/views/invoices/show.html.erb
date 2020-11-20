@@ -21,6 +21,9 @@
                         'data-toggle' => 'collapse',
                         'aria-expanded' => false,
                         'aria-controls' => 'tableCollapse' %>
+            <%= link_to 'Remove Campaign', remove_campaign_invoice_path(@invoice, campaign: campaign),
+                        method: :delete,
+                        class: 'btn btn-outline-danger btn-sm ml-2'%>
           </th>
         </tr>
         <tr>
