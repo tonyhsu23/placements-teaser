@@ -19,5 +19,7 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :versions, only: %i[index show]
+
   root 'line_items#index'
 end
