@@ -18,8 +18,8 @@
       <% @campaign.line_items.each do |item| %>
         <tr>
           <td><%= item.name %></td>
-          <td><%= number_to_currency(item.booked_amount) %></td>
-          <td><%= number_to_currency(item.actual_amount) %></td>
+          <td class="text-right"><%= number_to_currency(item.booked_amount) %></td>
+          <td class="text-right"><%= number_to_currency(item.actual_amount) %></td>
           <td>
             <%= form_with model: item do |f| %>
               <%= f.text_field :adjustments,
@@ -29,7 +29,7 @@
                 class: 'btn btn-outline-primary btn-sm', disabled: item.reviewed? %>
             <% end %>
           </td>
-          <td><%= number_to_currency(item.billable_amount) %></td>
+          <td class="text-right"><%= number_to_currency(item.billable_amount) %></td>
           <td id="lineitem-status-<%= item.id %>">
             <% if item.reviewed? %>
               <%= item.status %>
@@ -42,7 +42,7 @@
       <% end %>
       <tr>
         <td colspan="6">
-          <h5 class="text-primary">
+          <h5 class="text-primary text-right">
             sub-totals: <%= number_to_currency(@campaign.sub_totals) %>
           </h5>
         </td>

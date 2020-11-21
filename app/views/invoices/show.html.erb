@@ -40,16 +40,16 @@
         <% campaign.line_items.each do |item| %>
           <tr>
             <td><%= item.name %></td>
-            <td><%= number_to_currency(item.booked_amount) %></td>
-            <td><%= number_to_currency(item.actual_amount) %></td>
-            <td><%= number_to_currency(item.adjustments) %></td>
-            <td><%= number_to_currency(item.billable_amount) %></td>
+            <td class="text-right"><%= number_to_currency(item.booked_amount) %></td>
+            <td class="text-right"><%= number_to_currency(item.actual_amount) %></td>
+            <td class="text-right"><%= number_to_currency(item.adjustments) %></td>
+            <td class="text-right"><%= number_to_currency(item.billable_amount) %></td>
           </tr>
         <% end %>
       </tbody>
       <tr>
         <td colspan="5">
-          <h6 class="text-primary">
+          <h6 class="text-primary text-right">
             sub-totals: <%= number_to_currency(campaign.sub_totals) %>
           </h6>
         </td>
@@ -58,7 +58,7 @@
     <% end %>
     <tfoot>
       <td colspan="5">
-        <h5 class="text-primary">
+        <h5 class="text-primary text-right">
           grand-totals: <%= number_to_currency(@invoice.grand_totals) %>
         </h5>
       </td>
