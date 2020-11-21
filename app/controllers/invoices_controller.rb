@@ -1,7 +1,10 @@
 class InvoicesController < ApplicationController
+  include FileUploadable
+
   before_action :set_campaign_selection, only: %i[index show]
   before_action :set_campaigns, only: %i[create update]
-  before_action :set_invoice, only: %i[show remove_campaign]
+  before_action :set_invoice, only: %i[show remove_campaign upload]
+  before_action :set_filename, only: %i[show upload]
 
   def index
     @invoices = Invoice.includes(campaigns: :line_items).joins(campaigns: :line_items)
@@ -18,8 +21,7 @@ class InvoicesController < ApplicationController
     respond_to do |format|
       format.html
       format.xlsx {
-        filename = "#{Date.today}-INVOICE-#{@invoice.code}"
-        response.headers['Content-Disposition'] = "attachment; filename=\"#{filename}.xlsx\""
+        response.headers['Content-Disposition'] = "attachment; filename=\"#{@filename}\""
       }
     end
   end
@@ -32,6 +34,19 @@ class InvoicesController < ApplicationController
 
   def remove_campaign
     @invoice.remove_campaign(campaign_id)
+
+    redirect_back(fallback_location: invoice_path(@invoice))
+  end
+
+  def upload
+    spreadsheet = render_to_string(template: 'invoices/show.xlsx.axlsx',
+                                   format: :axlsx, locals: { data: @invoice })
+
+    if object_uploaded?("invoices/#{@filename}", spreadsheet)
+      flash[:success] = 'Upload successfully'
+    else
+      flash[:warning] = 'Error uploading object'
+    end
 
     redirect_back(fallback_location: invoice_path(@invoice))
   end
@@ -56,5 +71,9 @@ class InvoicesController < ApplicationController
 
   def set_campaigns
     @campaigns = Campaign.where(id: campaign_ids)
+  end
+
+  def set_filename
+    @filename = "#{Date.today}-INVOICE-#{@invoice.code}.xlsx"
   end
 end

@@ -15,6 +15,7 @@ Rails.application.routes.draw do
 
   resources :invoices, only: %i[index create show update] do
     member do
+      get :upload
       delete :remove_campaign
     end
   end

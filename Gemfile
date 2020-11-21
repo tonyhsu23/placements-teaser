@@ -41,6 +41,7 @@ gem 'kaminari'
 gem 'paper_trail'
 gem 'select2-rails'
 gem 'caxlsx_rails'
+gem 'aws-sdk-s3', '~> 1'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
