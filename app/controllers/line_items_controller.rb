@@ -11,14 +11,19 @@ class LineItemsController < ApplicationController
   def show; end
 
   def update
-    return @status = 'failure' if @item.reviewed?
-    @item.update!(adjustments: update_params)
+    if @item.reviewed?
+      flash.now[:warning] = 'Cannot change reviewed line item'
+    else
+      @item.update!(adjustments: update_params)
+      flash.now[:success] = 'Update adjustments successfully'
+    end
   end
 
   def update_status
     @item.send("#{params[:event]}!")
+    flash[:success] = "#{@item.reload.status} successfully"
   rescue AASM::InvalidTransition
-    @status = 'failure'
+    flash[:warning] = 'Invalid status transition'
   end
 
   private

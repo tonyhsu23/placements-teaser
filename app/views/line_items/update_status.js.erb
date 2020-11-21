@@ -1,6 +1,6 @@
-<% if @status == "failure" %>
-    alert("Invalid status transition")
-<% else %>
+$("#flash").html('<%= j render "layouts/partials/flash" %>');
+
+<% if flash[:success].present? %>
     $("#lineitem-status-<%= @item.id %>").html("<%= @item.status %>");
     $("#lineitem-adjustments-btn-<%= @item.id %>").attr("disabled", true);
 <% end %>

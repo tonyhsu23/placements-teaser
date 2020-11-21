@@ -1,7 +1,5 @@
-<% if @status == "failure" %>
-    alert("Invalid status transition")
-<% elsif  @status == "unreviewable" %>
-    alert("Line Items must all be reviewed first")
-<% else %>
+$("#flash").html('<%= j render "layouts/partials/flash" %>');
+
+<% if flash[:success].present? %>
     $("#campaign-status-<%= @campaign.id %>").html("<%= @campaign.status %>");
 <% end %>

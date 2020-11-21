@@ -11,11 +11,16 @@ class CampaignsController < ApplicationController
 
   def update_status
     @campaign = @campaigns.find(params[:id])
-    return @status = 'unreviewable' if !@campaign.reviewable?
 
-    @campaign.send("#{params[:event]}!")
+    if @campaign.reviewable?
+      @campaign.send("#{params[:event]}!")
+      flash[:success] = "#{@campaign.reload.status} successfully"
+    else
+      flash[:warning] = 'Line Items must all be reviewed first'
+    end
+
   rescue AASM::InvalidTransition
-    @status = 'failure'
+    flash[:warning] = 'Invalid status transition'
   end
 
   private
