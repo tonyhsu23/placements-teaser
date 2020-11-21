@@ -7,7 +7,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :line_items, only: %i[index update] do
+  resources :line_items, only: %i[index update show] do
     member do
       patch :update_status
     end

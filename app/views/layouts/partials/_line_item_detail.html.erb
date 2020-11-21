@@ -1,0 +1,43 @@
+<% items = locals[:items] %>
+
+<table class="table table-bordered">
+  <thead class="table-success">
+    <tr>
+      <th scope="col"><%= sort_link 'name', 'line_items.name', request.params %></th>
+      <th scope="col"><%= sort_link 'campaign', 'campaigns.name', request.params %></th>
+      <th scope="col"><%= sort_link 'booked amount', 'booked_amount', request.params %></th>
+      <th scope="col"><%= sort_link 'actual amount', 'actual_amount', request.params %></th>
+      <th scope="col"><%= sort_link 'adjustments', 'adjustments', request.params %></th>
+      <th scope="col">billable amount</th>
+      <th scope="col">status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% items.each do |item| %>
+      <tr>
+        <td><%= item.name %></td>
+        <td><%= link_to item.campaign_name.truncate(35), campaign_path(item.campaign) %></td>
+        <td><%= number_to_currency(item.booked_amount) %></td>
+        <td><%= number_to_currency(item.actual_amount) %></td>
+        <td>
+          <%= form_with model: item do |f| %>
+            <%= f.text_field :adjustments,
+              value: number_to_currency(item.adjustments),
+              id: "input-adjustments-#{item.id}" %>
+            <%= f.submit 'save', id: "lineitem-adjustments-btn-#{item.id}",
+              class: 'btn btn-outline-primary btn-sm', disabled: item.reviewed? %>
+          <% end %>
+        </td>
+        <td><%= number_to_currency(item.billable_amount) %></td>
+        <td id="lineitem-status-<%= item.id %>">
+          <% if item.reviewed? %>
+            <%= item.status %>
+          <% else %>
+            <%= link_to 'review', update_status_line_item_path(item, event: 'review'),
+              remote: true, method: :patch, class: 'btn btn-outline-primary btn-sm' %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

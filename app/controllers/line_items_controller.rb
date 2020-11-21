@@ -1,12 +1,14 @@
 class LineItemsController < ApplicationController
   include Currency
 
-  before_action :set_line_item, only: %i[update update_status]
+  before_action :set_line_item, only: %i[show update update_status]
 
   def index
     @items = LineItem.includes(:campaign).left_joins(:campaign)
     @items = manage(@items)
   end
+
+  def show; end
 
   def update
     return @status = 'failure' if @item.reviewed?
