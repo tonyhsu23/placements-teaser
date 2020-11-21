@@ -4,7 +4,7 @@
   <div class="col-10">
     <h3 class="text-primary"><%= "Invoice: #{@invoice.code}" %></h3>
     <h5 class="text-primary">
-      grand-totals: <%= number_to_currency(@invoice.grand_totals) %>
+      grand-totals: <%= number_to_currency(@invoice.grand_totals, precision: 5) %>
     </h5>
     <%= link_to 'Export', invoice_path(@invoice, format: :xlsx),
                 class: 'btn btn-outline-success' %>
@@ -34,7 +34,7 @@
               </div>
               <div class="col-4">
                 <h6 class="text-primary text-right">
-                  sub-totals: <%= number_to_currency(campaign.sub_totals) %>
+                  sub-totals: <%= number_to_currency(campaign.sub_totals, precision: 5) %>
                 </h6>
               </div>
             </div>
@@ -52,10 +52,10 @@
         <% campaign.line_items.each do |item| %>
           <tr>
             <td><%= item.name %></td>
-            <td class="text-right"><%= number_to_currency(item.booked_amount) %></td>
-            <td class="text-right"><%= number_to_currency(item.actual_amount) %></td>
-            <td class="text-right"><%= number_to_currency(item.adjustments) %></td>
-            <td class="text-right"><%= number_to_currency(item.billable_amount) %></td>
+            <td class="text-right"><%= number_to_currency(item.booked_amount, precision: 5) %></td>
+            <td class="text-right"><%= number_to_currency(item.actual_amount, precision: 5) %></td>
+            <td class="text-right"><%= number_to_currency(item.adjustments, precision: 5) %></td>
+            <td class="text-right"><%= number_to_currency(item.billable_amount, precision: 5) %></td>
           </tr>
         <% end %>
       </tbody>
@@ -64,7 +64,7 @@
     <tfoot>
       <td colspan="5">
         <h5 class="text-primary text-right">
-          grand-totals: <%= number_to_currency(@invoice.grand_totals) %>
+          grand-totals: <%= number_to_currency(@invoice.grand_totals, precision: 5) %>
         </h5>
       </td>
     </tfoot>

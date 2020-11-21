@@ -30,7 +30,7 @@
               <%= link_to campaign.name, campaign_path(campaign) %></br>
             <% end %>
           </td>
-          <td class="text-right"><%= number_to_currency(invoice.grand_totals) %></td>
+          <td class="text-right"><%= number_to_currency(invoice.grand_totals, precision: 5) %></td>
           <td><%= invoice.created_at %></td>
         </tr>
       <% end %>

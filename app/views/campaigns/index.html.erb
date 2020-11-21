@@ -16,7 +16,7 @@
       <% @campaigns.each do |campaign| %>
         <tr>
           <td><%= link_to campaign.name, campaign_path(campaign) %></td>
-          <td class="text-right"><%= number_to_currency(campaign.sub_totals) %></td>
+          <td class="text-right"><%= number_to_currency(campaign.sub_totals, precision: 5) %></td>
           <td><%= campaign.created_at %></td>
           <td id="campaign-status-<%= campaign.id %>">
             <% if campaign.reviewed? %>

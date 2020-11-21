@@ -2,7 +2,9 @@
   <%= render 'layouts/partials/breadcrumb', locals: { resource: @campaign } %>
 
   <h3 class="text-primary"><%= @campaign.name %></h3>
-  <h5 class="text-primary text-right">sub-total: <%= number_to_currency(@campaign.sub_totals) %></h5>
+  <h5 class="text-primary text-right">
+    sub-total: <%= number_to_currency(@campaign.sub_totals, precision: 5) %>
+  </h5>
 
   <table class="table table-bordered">
     <thead class="table-success">
@@ -19,18 +21,18 @@
       <% @campaign.line_items.each do |item| %>
         <tr>
           <td><%= item.name %></td>
-          <td class="text-right"><%= number_to_currency(item.booked_amount) %></td>
-          <td class="text-right"><%= number_to_currency(item.actual_amount) %></td>
+          <td class="text-right"><%= number_to_currency(item.booked_amount, precision: 5) %></td>
+          <td class="text-right"><%= number_to_currency(item.actual_amount, precision: 5) %></td>
           <td>
             <%= form_with model: item do |f| %>
               <%= f.text_field :adjustments,
-                value: number_to_currency(item.adjustments),
+                value: number_to_currency(item.adjustments, precision: 5),
                 id: "input-adjustments-#{item.id}" %>
               <%= f.submit 'save', id: "lineitem-adjustments-btn-#{item.id}",
                 class: 'btn btn-outline-primary btn-sm', disabled: item.reviewed? %>
             <% end %>
           </td>
-          <td class="text-right"><%= number_to_currency(item.billable_amount) %></td>
+          <td class="text-right"><%= number_to_currency(item.billable_amount, precision: 5) %></td>
           <td id="lineitem-status-<%= item.id %>">
             <% if item.reviewed? %>
               <%= item.status %>
@@ -44,7 +46,7 @@
       <tr>
         <td colspan="6">
           <h5 class="text-primary text-right">
-            sub-totals: <%= number_to_currency(@campaign.sub_totals) %>
+            sub-totals: <%= number_to_currency(@campaign.sub_totals, precision: 5) %>
           </h5>
         </td>
       </tr>
