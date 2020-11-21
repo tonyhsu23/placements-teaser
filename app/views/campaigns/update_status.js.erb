@@ -1,5 +1,5 @@
 $("#flash").html('<%= j render "layouts/partials/flash" %>');
 
 <% if flash[:success].present? %>
-    $("#campaign-status-<%= @campaign.id %>").html("<%= @campaign.status %>");
+    $("#campaign-status-<%= @campaign.id %>").html('<div class="text-success">' + "<%= @campaign.status %>" + "</div>");
 <% end %>

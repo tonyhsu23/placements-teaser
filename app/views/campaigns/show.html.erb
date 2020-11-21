@@ -2,7 +2,17 @@
   <%= render 'layouts/partials/breadcrumb', locals: { resource: @campaign } %>
   <%= render 'layouts/partials/flash' %>
 
-  <h3 class="text-primary"><%= @campaign.name %></h3>
+  <div class="col-10">
+    <h3 class="text-primary"><%= @campaign.name %></h3>
+  </div>
+  <div class="col-2 text-right" id="campaign-status-<%= @campaign.id %>">
+    <% if @campaign.reviewed? %>
+      <div class="text-success"><%= @campaign.status %></div>
+    <% else %>
+      <%= link_to 'review campaign', update_status_campaign_path(@campaign, event: 'review'),
+        remote: true, method: :patch, class: 'btn btn-outline-primary btn-sm' %>
+    <% end %>
+  </div>
   <h5 class="text-primary text-right">
     sub-total: <%= number_to_currency(@campaign.sub_totals, precision: 5) %>
   </h5>

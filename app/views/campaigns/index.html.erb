@@ -21,7 +21,7 @@
           <td><%= campaign.created_at %></td>
           <td id="campaign-status-<%= campaign.id %>">
             <% if campaign.reviewed? %>
-              <%= campaign.status %>
+              <div class="text-success"><%= campaign.status %></div>
             <% else %>
               <%= link_to 'review', update_status_campaign_path(campaign, event: 'review'),
                 remote: true, method: :patch, class: 'btn btn-outline-primary btn-sm' %>
