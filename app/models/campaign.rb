@@ -1,4 +1,6 @@
 class Campaign < ApplicationRecord
+  has_paper_trail
+
   include FieldSearchable
   include StatusReviewable
 

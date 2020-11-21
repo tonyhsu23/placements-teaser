@@ -1,4 +1,5 @@
 class LineItem < ApplicationRecord
+  has_paper_trail
   include FieldSearchable
   include StatusReviewable
 

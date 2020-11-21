@@ -1,4 +1,6 @@
 class Invoice < ApplicationRecord
+  has_paper_trail
+
   include FieldSearchable
 
   has_many :campaigns_invoices
