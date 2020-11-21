@@ -1,0 +1,7 @@
+<% if @status == "failure" %>
+    alert("Invalid status transition")
+<% elsif  @status == "unreviewable" %>
+    alert("Line Items must all be reviewed first")
+<% else %>
+    $("#campaign-status-<%= @campaign.id %>").html("<%= @campaign.status %>");
+<% end %>

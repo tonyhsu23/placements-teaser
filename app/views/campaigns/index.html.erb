@@ -9,6 +9,7 @@
         <th scope="col"><%= sort_link 'name', 'campaigns.name', request.params %></th>
         <th scope="col">sub-totals</th>
         <th scope="col"><%= sort_link 'created_at', 'campaigns.created_at', request.params %></th>
+        <th scope="col">status</th>
       </tr>
     </thead>
     <tbody>
@@ -17,6 +18,14 @@
           <td><%= link_to campaign.name, campaign_path(campaign) %></td>
           <td><%= number_to_currency(campaign.sub_totals) %></td>
           <td><%= campaign.created_at %></td>
+          <td id="campaign-status-<%= campaign.id %>">
+            <% if campaign.reviewed? %>
+              <%= campaign.status %>
+            <% else %>
+              <%= link_to 'review', update_status_campaign_path(campaign, event: 'review'),
+                remote: true, method: :patch, class: 'btn btn-outline-primary btn-sm' %>
+            <% end %>
+          </td>
         </tr>
       <% end %>
     </tbody>

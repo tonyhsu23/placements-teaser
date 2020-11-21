@@ -9,6 +9,15 @@ class CampaignsController < ApplicationController
     @campaign = sort(@campaigns).find(params[:id])
   end
 
+  def update_status
+    @campaign = @campaigns.find(params[:id])
+    return @status = 'unreviewable' if !@campaign.reviewable?
+
+    @campaign.send("#{params[:event]}!")
+  rescue AASM::InvalidTransition
+    @status = 'failure'
+  end
+
   private
 
   def set_campaigns

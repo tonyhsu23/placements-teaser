@@ -1,7 +1,12 @@
 Rails.application.routes.draw do
   devise_for :users
 
-  resources :campaigns, only: %i[index show]
+  resources :campaigns, only: %i[index show] do
+    member do
+      patch :update_status
+    end
+  end
+
   resources :line_items, only: %i[index update] do
     member do
       patch :update_status
