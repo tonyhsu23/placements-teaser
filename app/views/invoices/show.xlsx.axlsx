@@ -10,11 +10,12 @@ cell          = style.add_style(sz: 12)
 wb.add_worksheet(name: "Invoice") do |sheet|
   sheet.add_row ["Invoice: #{@invoice.code}"], style: [title_cell]
   sheet.add_row
+  sheet.add_row
   sheet.merge_cells('A1:E1')
 
-  campaign_merge_row, sub_totals_merge_row = 3, 2
-  @invoice.campaigns.each_with_index do |campaign, index|
-    sub_totals_merge_row += campaign.line_items.count + 3 + index
+  campaign_merge_row, sub_totals_merge_row = 4, 2
+  @invoice.campaigns.each do |campaign|
+    sub_totals_merge_row += campaign.line_items.count + 4
 
     sheet.add_row [campaign.name], style: [campaign_cell]
     sheet.add_row ['name', 'booked amount', 'actual amount', 'adjustments', 'billable amount'],
