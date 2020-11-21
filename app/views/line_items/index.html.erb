@@ -12,6 +12,7 @@
         <th scope="col"><%= sort_link 'actual amount', 'actual_amount', request.params %></th>
         <th scope="col"><%= sort_link 'adjustments', 'adjustments', request.params %></th>
         <th scope="col">billable amount</th>
+        <th scope="col">status</th>
       </tr>
     </thead>
     <tbody>
@@ -26,10 +27,19 @@
               <%= f.text_field :adjustments,
                 value: number_to_currency(item.adjustments),
                 id: "input-adjustments-#{item.id}" %>
-              <%= f.submit 'save', class: 'btn btn-outline-primary btn-sm' %>
+              <%= f.submit 'save', id: "lineitem-adjustments-btn-#{item.id}",
+                class: 'btn btn-outline-primary btn-sm', disabled: item.reviewed? %>
             <% end %>
           </td>
           <td><%= number_to_currency(item.billable_amount) %></td>
+          <td id="lineitem-status-<%= item.id %>">
+            <% if item.reviewed? %>
+              <%= item.status %>
+            <% else %>
+              <%= link_to 'review', update_status_line_item_path(item, event: 'review'),
+                remote: true, method: :patch, class: 'btn btn-outline-primary btn-sm' %>
+            <% end %>
+          </td>
         </tr>
       <% end %>
     </tbody>

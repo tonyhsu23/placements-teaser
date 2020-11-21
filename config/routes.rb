@@ -2,7 +2,12 @@ Rails.application.routes.draw do
   devise_for :users
 
   resources :campaigns, only: %i[index show]
-  resources :line_items, only: %i[index update]
+  resources :line_items, only: %i[index update] do
+    member do
+      patch :update_status
+    end
+  end
+
   resources :invoices, only: %i[index create show update] do
     member do
       delete :remove_campaign
