@@ -3,7 +3,7 @@
   <div class="col-8">
     <%= render '/layouts/partials/filter', locals: { path: invoices_path } %>
   </div>
-  <div class="col-2 offset-2 mt-3 mb-3">
+  <div class="col-2 offset-2 mt-3 mb-3 text-right">
     <%= link_to 'Create Invoice', '#createInvoiceModal',
                 class: 'btn btn-primary', 'data-toggle' => 'modal' %>
   </div>

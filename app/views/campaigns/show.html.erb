@@ -2,6 +2,7 @@
   <%= render 'layouts/partials/breadcrumb', locals: { resource: @campaign } %>
 
   <h3 class="text-primary"><%= @campaign.name %></h3>
+  <h5 class="text-primary text-right">sub-total: <%= number_to_currency(@campaign.sub_totals) %></h5>
 
   <table class="table table-bordered">
     <thead class="table-success">
