@@ -1,20 +1,16 @@
-# Placements Teaser Instructions
+# Placements Teaser
 
-Please implement a React.JS component(s) for managing an example invoice JSON (10K lines, ~3MB).
-
-Things to think about:
-1. pagination
-2. filters
-3. sorting
-4. currency formatting
-5. interactive sub-totalings
-6. etc.
+[Live Demo](http://ec2-18-183-142-226.ap-northeast-1.compute.amazonaws.com/)
 
 # Installation
-1. Make sure you have Rails installed locally (https://guides.rubyonrails.org/v5.0/getting_started.html)
-2. Clone or fork this git repo locally
-3. Run `bundle install` in your terminal (within your `placements_teaser` project directory).
+*Please install ruby version greater or equal to `2.5.7` and make sure NodeJS is installed*
+
+1. Install rails if you haven't (`gem install rails -v 5.1.7`)
+2. Clone this repo
+3. In the `placements-teaser` directory, run `bundle install`
+4. To get the data schema in your local database, run `rake db:migrate`
+5. To get the data in your database, run `rake db:seed`
 
 # Running
-1. Run `bundle exec rails server` in your terminal (within your `placements_teaser` project directory).
-2. Go to `localhost:3000` in your browser and start hacking away!
+1. Run `rails server`
+2. Open your browser and go to `localhost:3000`
