@@ -8,8 +8,8 @@
 1. Install rails if you haven't (`gem install rails -v 5.1.7`)
 2. Clone this repo
 3. In the `placements-teaser` directory, run `bundle install`
-4. To get the data schema in your local database, run `rake db:migrate`
-5. To get the data in your database, run `rake db:seed`
+4. To get the data schema in your local database, run `bundle exec rake db:migrate`
+5. To get the data in your database, run `bundle exec rake db:seed`
 
 # Running
 1. Run `rails server`
