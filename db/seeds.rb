@@ -1,6 +1,8 @@
 file = File.read('public/placements_teaser_data.json')
 data = JSON.parse(file)
 
+puts "Importing data, please wait..."
+
 ActiveRecord::Base.transaction do
   data.each_with_index do |item|
     campaign = Campaign.find_or_create_by!(id: item['campaign_id'],
