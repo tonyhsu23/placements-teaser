@@ -46,7 +46,7 @@
           <td class="text-right"><%= number_to_currency(item.billable_amount, precision: 5) %></td>
           <td id="lineitem-status-<%= item.id %>">
             <% if item.reviewed? %>
-              <%= item.status %>
+              <div class="text-success"><%= item.status %></div>
             <% else %>
               <%= link_to 'review', update_status_line_item_path(item, event: 'review'),
                 remote: true, method: :patch, class: 'btn btn-outline-primary btn-sm' %>
