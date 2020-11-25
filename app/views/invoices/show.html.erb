@@ -1,0 +1,90 @@
+<div class="row mt-2 mb-5">
+  <%= render 'layouts/partials/breadcrumb', locals: { resource: @invoice } %>
+  <%= render 'layouts/partials/flash' %>
+
+  <div class="col-10">
+    <h3 class="text-primary"><%= "Invoice: #{@invoice.code}" %></h3>
+    <h5 class="text-primary">
+      grand-totals: <%= number_to_currency(@invoice.grand_totals, precision: 5) %>
+    </h5>
+    <%= link_to 'Export', invoice_path(@invoice, format: :xlsx),
+                class: 'btn btn-outline-success' %>
+    <%= link_to 'Upload to cloud', upload_invoice_path(@invoice),
+                class: 'btn btn-outline-success' %>
+  </div>
+  <div class="col-2 text-right">
+    <%= link_to 'Add Campaign', '#addCampaignModal',
+                class: 'btn btn-primary', 'data-toggle' => 'modal' %>
+  </div>
+
+  <table class="table table-bordered mt-2">
+    <% @invoice.campaigns.each do |campaign| %>
+      <thead class="table-success">
+        <tr>
+          <th colspan="5">
+            <div class="row">
+              <div class="col-8">
+                <%= link_to campaign.name, campaign_path(campaign) %>
+                <%= link_to 'Toggle detail',
+                  "#tableCollapse#{campaign.id}",
+                  class: 'btn btn-outline-secondary btn-sm ml-2',
+                  'data-toggle' => 'collapse',
+                  'aria-expanded' => false,
+                  'aria-controls' => 'tableCollapse' %>
+                <%= link_to 'Remove Campaign', remove_campaign_invoice_path(@invoice, campaign: campaign),
+                        method: :delete,
+                        class: 'btn btn-outline-danger btn-sm ml-2'%>
+              </div>
+              <div class="col-4">
+                <h6 class="text-primary text-right">
+                  sub-totals: <%= number_to_currency(campaign.sub_totals, precision: 5) %>
+                </h6>
+              </div>
+            </div>
+          </th>
+        </tr>
+        <tr>
+          <th scope="col">name</th>
+          <th scope="col">booked amount</th>
+          <th scope="col">actual amount</th>
+          <th scope="col">adjustments</th>
+          <th scope="col">billable amount</th>
+        </tr>
+      </thead>
+      <tbody class="collapse" id="tableCollapse<%= campaign.id %>">
+        <% campaign.line_items.each do |item| %>
+          <tr>
+            <td><%= item.name %></td>
+            <td class="text-right"><%= number_to_currency(item.booked_amount, precision: 5) %></td>
+            <td class="text-right"><%= number_to_currency(item.actual_amount, precision: 5) %></td>
+            <td class="text-right"><%= number_to_currency(item.adjustments, precision: 5) %></td>
+            <td class="text-right"><%= number_to_currency(item.billable_amount, precision: 5) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+      <td colspan="5"></td>
+    <% end %>
+    <tfoot>
+      <td colspan="5">
+        <h5 class="text-primary text-right">
+          grand-totals: <%= number_to_currency(@invoice.grand_totals, precision: 5) %>
+        </h5>
+      </td>
+    </tfoot>
+  </table>
+</div>
+
+<%= render '/layouts/partials/modal', locals: { name: 'addCampaign' } do %>
+  <%= form_for @invoice do |f| %>
+    <div class="modal-body form-group">
+      <div class="form-group">
+        <label for="campaingsSelectLabel">Campaigns</label>
+        <%= f.select :campaigns, @campaigns_select, {}, multiple: true, class: 'form-control' %>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      <%= f.submit 'Add', class: 'btn btn-primary'%>
+    </div>
+  <% end %>
+<% end %>

@@ -1,0 +1,39 @@
+<div class="row mt-3 mb-5">
+  <h3>Record History</h3>
+  <h6>Search By Type:</h6>
+  <div class="mb-2">
+    <%= link_to 'all', versions_path, class: 'badge badge-primary' %>
+
+    <% @item_types.each do |type| %>
+      <%= link_to type, versions_path(keyword: type), class: 'badge badge-primary' %>
+    <% end %>
+  </div>
+
+  <%= render '/layouts/partials/filter', locals: { path: versions_path } %>
+
+  <table class="table table-bordered">
+    <thead class="table-success">
+      <tr>
+        <th scope="col">user</th>
+        <th scope="col">event</th>
+        <th scope="col">item</th>
+        <th scope="col"><%= sort_link 'created at', 'versions.created_at', request.params %></th>
+        <th scope="col">change detail</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @versions.each do |version| %>
+        <tr>
+          <td><%= version.user.email %></td>
+          <td><%= version.event %></td>
+          <td><%= link_to "#{version.item_type}: #{version.item_id}",
+            "/#{version.item_type.underscore.pluralize}/#{version.item_id}" %></td>
+          <td><%= version.created_at %></td>
+          <td><%= link_to 'view', version_path(version), class: 'btn btn-outline-primary btn-sm' %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= paginate @versions %>
+</div>

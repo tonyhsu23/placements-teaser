@@ -1,0 +1,66 @@
+<div class="row mt-2 mb-5">
+  <%= render 'layouts/partials/breadcrumb', locals: { resource: @campaign } %>
+  <%= render 'layouts/partials/flash' %>
+
+  <div class="col-10">
+    <h3 class="text-primary"><%= @campaign.name %></h3>
+  </div>
+  <div class="col-2 text-right" id="campaign-status-<%= @campaign.id %>">
+    <% if @campaign.reviewed? %>
+      <div class="text-success"><%= @campaign.status %></div>
+    <% else %>
+      <%= link_to 'review campaign', update_status_campaign_path(@campaign, event: 'review'),
+        remote: true, method: :patch, class: 'btn btn-outline-primary btn-sm' %>
+    <% end %>
+  </div>
+  <h5 class="text-primary text-right">
+    sub-total: <%= number_to_currency(@campaign.sub_totals, precision: 5) %>
+  </h5>
+
+  <table class="table table-bordered">
+    <thead class="table-success">
+      <tr>
+        <th scope="col"><%= sort_link 'name', 'line_items.name', request.params %></th>
+        <th scope="col"><%= sort_link 'booked amount', 'line_items.booked_amount', request.params %></th>
+        <th scope="col"><%= sort_link 'actual amount', 'line_items.actual_amount', request.params %></th>
+        <th scope="col"><%= sort_link 'adjustments', 'line_items.adjustments', request.params %></th>
+        <th scope="col">billable amount</th>
+        <th scope="col">status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @campaign.line_items.each do |item| %>
+        <tr>
+          <td><%= item.name %></td>
+          <td class="text-right"><%= number_to_currency(item.booked_amount, precision: 5) %></td>
+          <td class="text-right"><%= number_to_currency(item.actual_amount, precision: 5) %></td>
+          <td>
+            <%= form_with model: item do |f| %>
+              <%= f.text_field :adjustments,
+                value: number_to_currency(item.adjustments, precision: 5),
+                id: "input-adjustments-#{item.id}" %>
+              <%= f.submit 'save', id: "lineitem-adjustments-btn-#{item.id}",
+                class: 'btn btn-outline-primary btn-sm', disabled: item.reviewed? %>
+            <% end %>
+          </td>
+          <td class="text-right"><%= number_to_currency(item.billable_amount, precision: 5) %></td>
+          <td id="lineitem-status-<%= item.id %>">
+            <% if item.reviewed? %>
+              <div class="text-success"><%= item.status %></div>
+            <% else %>
+              <%= link_to 'review', update_status_line_item_path(item, event: 'review'),
+                remote: true, method: :patch, class: 'btn btn-outline-primary btn-sm' %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+      <tr>
+        <td colspan="6">
+          <h5 class="text-primary text-right">
+            sub-totals: <%= number_to_currency(@campaign.sub_totals, precision: 5) %>
+          </h5>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

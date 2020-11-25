@@ -1,0 +1,5 @@
+$("#flash").html('<%= j render "layouts/partials/flash" %>');
+
+<% if flash[:success].present? %>
+  $("#input-adjustments-<%= @item.id %>").val("<%= number_to_currency(@item.adjustments, precision: 5) %>");
+<% end %>

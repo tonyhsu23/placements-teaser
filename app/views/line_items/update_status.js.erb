@@ -1,0 +1,6 @@
+$("#flash").html('<%= j render "layouts/partials/flash" %>');
+
+<% if flash[:success].present? %>
+    $("#lineitem-status-<%= @item.id %>").html('<div class="text-success">' + "<%= @item.status %>" + "</div>");
+    $("#lineitem-adjustments-btn-<%= @item.id %>").attr("disabled", true);
+<% end %>

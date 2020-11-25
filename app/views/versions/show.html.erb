@@ -1,0 +1,9 @@
+<div class="row mt-2 mb-5">
+  <%= render 'layouts/partials/breadcrumb', locals: { resource: @version } %>
+
+  <pre><code>
+    <% @version.object_changes.split("\n").each do |line| %>
+      <%= line %></br>
+    <% end %>
+  </code></pre>
+</div>
