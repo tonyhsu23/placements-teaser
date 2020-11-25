@@ -1,9 +1,9 @@
 class InvoicesController < ApplicationController
   include FileUploadable
 
-  before_action :set_campaign_selection, only: %i[index show]
-  before_action :set_campaigns, only: %i[create update]
   before_action :set_invoice, only: %i[show remove_campaign upload]
+  before_action :set_campaigns, only: %i[create update]
+  before_action :set_campaign_selection, only: %i[index show]
   before_action :set_filename, only: %i[show upload]
 
   def index
@@ -66,7 +66,9 @@ class InvoicesController < ApplicationController
   end
 
   def set_campaign_selection
-    @campaigns_select = Campaign.all.collect { |c| [c.name, c.id] }
+    campaigns = Campaign.all
+    campaigns = campaigns - @invoice.campaigns if action_name == 'show'
+    @campaigns_select = campaigns.collect { |c| [c.name, c.id] }
   end
 
   def set_campaigns
